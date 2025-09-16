@@ -1,5 +1,5 @@
 import streamlit as st
-import openai
+# import openai   # No need for OpenAI in demo mode
 
 # --- CONFIG ---
 st.set_page_config(page_title="AI Flashcard Generator", page_icon="📚", layout="centered")
@@ -11,20 +11,14 @@ st.write("Paste your text below, and AI will generate flashcards (Q&A format).")
 # --- INPUT FIELD ---
 user_text = st.text_area("Enter your notes, article, or text:", height=200)
 
-# --- API KEY INPUT (hidden for deployment you can use st.secrets) ---
-api_key = st.text_input("Enter your OpenAI API Key:", type="password")
-
 # --- GENERATE FLASHCARDS ---
 if st.button("Generate Flashcards"):
-    if not api_key:
-        st.error("Please enter your OpenAI API key.")
-    elif not user_text.strip():
+    if not user_text.strip():
         st.error("Please enter some text to generate flashcards.")
     else:
         try:
-            openai.api_key = api_key
-            # Demo mode: generate sample flashcards
-flashcards = """
+            # --- DEMO MODE: generate sample flashcards ---
+            flashcards = """
 Q: What is the main role of a Jr. Security Engineer?
 A: To understand and implement electronic security systems such as ACS, IDS, and CCTV.
 
@@ -43,7 +37,6 @@ A: Microsoft Office, Excel, Adobe, Microsoft Project, Visio, BlueBeam, AutoCAD, 
 
             # --- DOWNLOAD OPTION ---
             st.download_button("Download Flashcards", flashcards, file_name="flashcards.txt")
-        
+
         except Exception as e:
             st.error(f"Error: {str(e)}")
-
