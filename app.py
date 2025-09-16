@@ -23,16 +23,21 @@ if st.button("Generate Flashcards"):
     else:
         try:
             openai.api_key = api_key
-            response = openai.ChatCompletion.create(
-                model="gpt-4o-mini",
-                messages=[
-                    {"role": "system", "content": "You are an assistant that generates study flashcards in Q&A format."},
-                    {"role": "user", "content": f"Generate concise flashcards (Question and Answer pairs) from the following text:\n\n{user_text}"}
-                ],
-                temperature=0.5,
-                max_tokens=600
-            )
-            flashcards = response["choices"][0]["message"]["content"]
+            # Demo mode: generate sample flashcards
+flashcards = """
+Q: What is the main role of a Jr. Security Engineer?
+A: To understand and implement electronic security systems such as ACS, IDS, and CCTV.
+
+Q: What are some responsibilities of the Jr. Security Engineer?
+A: Reviewing floor plans, designing solutions, creating BOMs, and assisting with RFI/RFP responses.
+
+Q: What qualifications are preferred for this role?
+A: Mechanical/Engineering degree or 2+ years of experience, knowledge of MEP systems, strong problem-solving and communication skills.
+
+Q: Name some software tools mentioned in the job description.
+A: Microsoft Office, Excel, Adobe, Microsoft Project, Visio, BlueBeam, AutoCAD, Revit.
+"""
+
             st.subheader("✨ Generated Flashcards")
             st.write(flashcards)
 
@@ -41,3 +46,4 @@ if st.button("Generate Flashcards"):
         
         except Exception as e:
             st.error(f"Error: {str(e)}")
+
